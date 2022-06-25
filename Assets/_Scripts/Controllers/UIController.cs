@@ -1,15 +1,15 @@
 ﻿using ShockSprint.Events;
-using ShockSprint.Views.UI;
+using ShockSprint.Views.Game;
 
 namespace ShockSprint.Controllers
 {
     public class UIController : IController
     {
-        UIView view;
+        //UIView view;
 
         public UIController()
         {
-            view = UnityEngine.Object.FindObjectOfType<UIView>();
+            //view = UnityEngine.Object.FindObjectOfType<UIView>();
         }
 
         public void Dispose()

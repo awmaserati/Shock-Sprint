@@ -21,7 +21,8 @@ namespace ShockSprint.Controllers
             _playerModel.OnStay += _playerView.Stop;
             _playerModel.OnMove += _playerView.Move;
             _playerModel.OnRotate += _playerView.Rotate;
-            _playerModel.OnSprint += _playerModel.Sprint;
+            _playerModel.OnSprint += _playerView.Sprint;
+            _playerView.OnSprintEnded += _playerModel.SprintEnd;
             _playerModel.OnKnockOuted += _playerView.KnockOuted;
             _playerView.OnKnockOut += _playerModel.KnockOut;
         }
@@ -32,6 +33,8 @@ namespace ShockSprint.Controllers
             _playerModel.OnMove -= _playerView.Move;
             _playerModel.OnRotate -= _playerView.Rotate;
             _playerModel.OnSprint -= _playerModel.Sprint;
+            _playerView.OnSprintEnded -= _playerModel.SprintEnd;
+            _playerModel.OnKnockOuted -= _playerView.KnockOuted;
             _playerView.OnKnockOut -= _playerModel.KnockOut;
         }
 

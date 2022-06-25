@@ -27,7 +27,7 @@ namespace ShockSprint.Controllers
                 OnRotate?.Invoke(moveX);
             }
 
-            if(Input.GetMouseButtonDown(1))
+            if(Input.GetMouseButtonDown(0))
             {
                 OnSprint?.Invoke();
             }

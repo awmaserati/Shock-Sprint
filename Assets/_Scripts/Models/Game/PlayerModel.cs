@@ -27,18 +27,27 @@ namespace ShockSprint.Models.Game
 
         public void Stop()
         {
+            if (IsSprint)
+                return;
+
             _playerState = GameData.PlayerState.Idle;
             OnStay?.Invoke();
         }
 
         public void Move(float value)
         {
+            if (IsSprint)
+                return;
+
             _playerState = GameData.PlayerState.Move;
             OnMove?.Invoke(value);
         }
 
         public void Rotate(float value)
         {
+            if (IsSprint)
+                return;
+
             _playerState = GameData.PlayerState.Move;
             OnRotate?.Invoke(value);
         }
@@ -47,6 +56,11 @@ namespace ShockSprint.Models.Game
         {
             _playerState = GameData.PlayerState.Sprint;
             OnSprint?.Invoke();
+        }
+
+        public void SprintEnd()
+        {
+            _playerState = GameData.PlayerState.Idle;
         }
 
         public void KnockOut()
