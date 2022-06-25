@@ -1,12 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using UnityEngine;
 
-namespace Assets._Scripts.Configs
+namespace ShockSprint.Configs
 {
-    class MainConfig
+    public class MainConfig : MonoBehaviour
     {
+        public static MainConfig Instance = null;
+
+        [Header("Player Animation")]
+        public float MoveCoeff = 4f;
+        public float RotateCoeff = 110f;
+        public float SprintDistance = 3f;
+        public float SprintTime = 0.2f;
+
+        [Header("Camera Settings")]
+        public Vector3 CameraOffset = new Vector3(0, 2, -4);
+
+
+
+        private void Awake()
+        {
+            if(Instance == null)
+            {
+                Instance = this;
+            }
+            else
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 }

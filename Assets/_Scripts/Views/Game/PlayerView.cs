@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using ShockSprint.Configs;
 
 namespace ShockSprint.Views.Game
 {
@@ -31,7 +32,7 @@ namespace ShockSprint.Views.Game
         private void Awake()
         {
             Camera.main.transform.SetParent(transform);
-            Camera.main.transform.localPosition = new Vector3(0, 2f, -4);
+            Camera.main.transform.localPosition = MainConfig.Instance.CameraOffset;
             _animator = GetComponent<Animator>();
         }
 
@@ -54,7 +55,7 @@ namespace ShockSprint.Views.Game
                 ? _controllers[(int)AnimationType.MoveForvard]
                 : _controllers[(int)AnimationType.MoveBack];
 
-            transform.Translate(0, 0, value * Time.deltaTime * 173f);
+            transform.Translate(0, 0, value);
         }
 
         public void Rotate(float value)
@@ -65,7 +66,7 @@ namespace ShockSprint.Views.Game
             }
 
             _currentMoving.y = value;
-            transform.Rotate(0, value * Time.deltaTime * 505.0f, 0);
+            transform.Rotate(0, value, 0);
         }
 
         public void Sprint()
@@ -83,11 +84,12 @@ namespace ShockSprint.Views.Game
             do
             {
                 time += Time.deltaTime;
-                currentValue = Vector3.Lerp(Vector3.zero, new Vector3(0, 0, 3), time / 0.2f);
+                currentValue = Vector3.Lerp(Vector3.zero, new Vector3(0, 0, MainConfig.Instance.SprintDistance), 
+                    time / MainConfig.Instance.SprintTime);
                 transform.Translate(currentValue - prevValue, Space.Self);
                 prevValue = currentValue;
                 yield return null;
-            } while (time < 0.2f);
+            } while (time < MainConfig.Instance.SprintTime);
 
             _animator.runtimeAnimatorController = _controllers[(int)AnimationType.Idle];
             OnSprintEnded?.Invoke();

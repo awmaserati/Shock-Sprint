@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using ShockSprint.Configs;
 
 namespace ShockSprint.Controllers
 {
@@ -14,8 +15,8 @@ namespace ShockSprint.Controllers
 
         void Update()
         {
-            float moveX = Input.GetAxis("Horizontal") * Time.deltaTime * 110.0f;
-            float moveZ = Input.GetAxis("Vertical") * Time.deltaTime * 4f;
+            float moveX = Input.GetAxis("Horizontal") * Time.deltaTime * MainConfig.Instance.RotateCoeff;
+            float moveZ = Input.GetAxis("Vertical") * Time.deltaTime * MainConfig.Instance.MoveCoeff;
 
             if (moveX == 0 && moveZ == 0)
             {

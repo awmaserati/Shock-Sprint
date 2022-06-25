@@ -29,7 +29,7 @@ namespace ShockSprint.Controllers
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            
         }
 
         public void ReceiveEvent(IControllerEvent controllerEvent)
