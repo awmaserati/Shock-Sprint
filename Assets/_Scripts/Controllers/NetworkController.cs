@@ -1,22 +1,36 @@
-﻿using System;
+﻿using ShockSprint.Events;
+using ShockSprint.Managers;
+using Mirror;
 
 namespace ShockSprint.Controllers
 {
     public class NetworkController : IController
     {
-        public NetworkController()
-        { 
+        private NetworkManager _networkManger;
+        
 
+        public NetworkController()
+        {
+            
+        }
+
+        public void SetNetwork(NetworkManager manager)
+        {
+            _networkManger = manager;
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            
         }
 
         public void ReceiveEvent(IControllerEvent controllerEvent)
         {
-            throw new NotImplementedException();
+            if (controllerEvent.GetType() == typeof(StartHostGameEvent))
+            {
+                _networkManger.StartHost();
+                ControllerManager.DispatchEvent<GameController>(ControllerEventPool.CreateEvent<GameStartEvent>());
+            }
         }
     }
 }

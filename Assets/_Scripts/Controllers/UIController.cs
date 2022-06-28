@@ -18,13 +18,7 @@ namespace ShockSprint.Controllers
 
         public void ReceiveEvent(IControllerEvent controllerEvent)
         {
-            //switch (controllerEvent)
-            //{
-            //    case CubeColorEvent colorEvent:
-            //        view.ColorText.text = colorEvent.Color;
-            //        break;
-
-            //}
+            
         }
     }
 }

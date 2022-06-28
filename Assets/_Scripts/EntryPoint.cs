@@ -1,20 +1,23 @@
 ﻿using ShockSprint.Controllers;
 using ShockSprint.Managers;
 using UnityEngine;
+using Mirror;
 
 namespace ShockSprint
 {
     public class EntryPoint : MonoBehaviour
     {
-        void Start()
+        void Awake()
         {
             var goInputProvider = new GameObject("Keyboard Input Provider");
             var inputProvider = goInputProvider.AddComponent<KeyboardInputProvider>();
+            var network = FindObjectOfType<NetworkManager>();
 
             ControllerManager.CreateController<GameController>();
             ControllerManager.CreateController<PlayerController>();
             ControllerManager.CreateController<UIController>();
-            ControllerManager.CreateController<NetworkController>();
+            var networkController = ControllerManager.CreateController<NetworkController>();
+            networkController.SetNetwork(network);
             var inputController = ControllerManager.CreateController<InputController>();
             inputController.SetProvider(inputProvider);
         }

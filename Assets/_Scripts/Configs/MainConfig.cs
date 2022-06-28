@@ -11,6 +11,7 @@ namespace ShockSprint.Configs
         public float RotateCoeff = 110f;
         public float SprintDistance = 3f;
         public float SprintTime = 0.2f;
+        public Color KnockoutColor = Color.red;
 
         [Header("Camera Settings")]
         public Vector3 CameraOffset = new Vector3(0, 2, -4);

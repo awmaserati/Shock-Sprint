@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using ShockSprint.Configs;
+using ShockSprint.Network;
 
 namespace ShockSprint.Views.Game
 {
@@ -24,26 +25,37 @@ namespace ShockSprint.Views.Game
         public event Action OnSprintEnded = null;
 
         [SerializeField]
+        private PlayerNetwork _networkPart = null;
+        [SerializeField]
         private List<RuntimeAnimatorController> _controllers = null;
         private Animator _animator = null;
         private Vector2 _currentMoving = Vector2.zero;
 
-
         private void Awake()
         {
-            Camera.main.transform.SetParent(transform);
-            Camera.main.transform.localPosition = MainConfig.Instance.CameraOffset;
             _animator = GetComponent<Animator>();
+        }
+
+        private void Start()
+        {
+            Camera.main.transform.SetParent(transform.parent);
+            Camera.main.transform.localPosition = MainConfig.Instance.CameraOffset;
         }
 
         public void Stop()
         {
+            if (_networkPart.IsLocalPlayer)
+                return;
+
             _currentMoving = Vector2.zero;
             _animator.runtimeAnimatorController = _controllers[(int)AnimationType.Idle];
         }
 
         public void Move(float value)
         {
+            if (_networkPart.IsLocalPlayer)
+                return;
+
             _currentMoving = new Vector2(value, 0.0f);
 
             if (value == 0.0f)
@@ -60,7 +72,10 @@ namespace ShockSprint.Views.Game
 
         public void Rotate(float value)
         {
-            if(_currentMoving.x == 0.0f)
+            if (!_networkPart.IsLocalPlayer)
+                return;
+
+            if (_currentMoving.x == 0.0f)
             {
                 _animator.runtimeAnimatorController = _controllers[(int)AnimationType.Rotate];
             }
@@ -71,6 +86,9 @@ namespace ShockSprint.Views.Game
 
         public void Sprint()
         {
+            if (!_networkPart.IsLocalPlayer)
+                return;
+
             _animator.runtimeAnimatorController = _controllers[(int)AnimationType.Sprint];
             StartCoroutine(SprintCoroutine());
         }
@@ -97,12 +115,16 @@ namespace ShockSprint.Views.Game
 
         public void KnockOuted()
         {
+            //if (!_networkPart.isLocalPlayer)
+            //    return;
 
         }
 
         private void OnCollisionEnter(Collision collision)
         {
-            
+            //if (!_networkPart.isLocalPlayer)
+            //    return;
+
         }
     }
 }

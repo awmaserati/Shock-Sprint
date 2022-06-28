@@ -1,30 +1,30 @@
-﻿using System;
+﻿using ShockSprint.Events;
 using ShockSprint.Data;
 
 namespace ShockSprint.Controllers
 {
     public class GameController : IController
     {
-        private GameData.GameState _gameState = GameData.GameState.PreGame;
+        public GameData.GameState GameState { get; private set; }
 
         public GameController()
-        { 
-
+        {
+            GameState = GameData.GameState.PreGame;
         }
 
         public void StartGame()
         {
-            _gameState = GameData.GameState.Game;
+            GameState = GameData.GameState.Game;
         }
 
         public void RestartGame()
         {
-            _gameState = GameData.GameState.Game;
+            GameState = GameData.GameState.Game;
         }
 
         public void EndGame()
         {
-            _gameState = GameData.GameState.EndGame;
+            GameState = GameData.GameState.EndGame;
         }
 
         public void Dispose()
@@ -34,7 +34,10 @@ namespace ShockSprint.Controllers
 
         public void ReceiveEvent(IControllerEvent controllerEvent)
         {
-            throw new NotImplementedException();
+            if (controllerEvent.GetType() == typeof(GameStartEvent))
+            {
+                StartGame();
+            }
         }
     }
 }
